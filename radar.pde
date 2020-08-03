@@ -1,5 +1,3 @@
-float angle =0;
-float target_distance=200;
 float rad_angle=0;
 int radar_range=400;
 int width=1000;
@@ -10,7 +8,10 @@ int cercleY=490;
 void setup() {
   size(1900,1000);
 }
-
+//inputs
+float target_distance=200;
+float angle =0;
+float cap
 void draw() {
   background(0);
   
@@ -66,4 +67,9 @@ void  draw_target(float distance, float angle )
     square(dist*(cos(angle)), dist*(sin(angle)), 10);
     popMatrix();
   }
+}
+
+void cap()
+{
+  
 }
