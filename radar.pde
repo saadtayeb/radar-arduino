@@ -11,10 +11,9 @@ void setup() {
 //inputs
 float target_distance=200;
 float angle =0;
-float cap
+float cap;
 void draw() {
   background(0);
-  
   drawline(rad_angle,255);
   draw_shadows(rad_angle);
   pushMatrix();
@@ -71,5 +70,5 @@ void  draw_target(float distance, float angle )
 
 void cap()
 {
-  
+
 }

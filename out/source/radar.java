@@ -14,8 +14,6 @@ import java.io.IOException;
 
 public class radar extends PApplet {
 
-float angle =0;
-float target_distance=200;
 float rad_angle=0;
 int radar_range=400;
 int width=1000;
@@ -26,10 +24,12 @@ int cercleY=490;
 public void setup() {
   
 }
-
+//inputs
+float target_distance=200;
+float angle =0;
+float cap;
 public void draw() {
   background(0);
-  
   drawline(rad_angle,255);
   draw_shadows(rad_angle);
   pushMatrix();
@@ -82,6 +82,11 @@ public void  draw_target(float distance, float angle )
     square(dist*(cos(angle)), dist*(sin(angle)), 10);
     popMatrix();
   }
+}
+
+public void cap()
+{
+
 }
   public void settings() {  size(1900,1000); }
   static public void main(String[] passedArgs) {
