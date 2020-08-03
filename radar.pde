@@ -1,6 +1,7 @@
 import processing.serial.*;
 Serial myPort;
 
+
 float rad_angle=0;
 int radar_range=400;
 int width=1000;
@@ -8,7 +9,11 @@ int height=1000;
 int rayon = 450;
 int cercleX=460;
 int cercleY=490;
+
+
 void setup() {
+  myPort  =  new Serial (this, "COM3",  9600);
+  myPort.bufferUntil ( '\n' );   // Receiving the data from the Arduino IDE
   size(1900,1000);
 }
 //inputs
