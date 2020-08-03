@@ -1,3 +1,19 @@
+import processing.core.*; 
+import processing.data.*; 
+import processing.event.*; 
+import processing.opengl.*; 
+
+import java.util.HashMap; 
+import java.util.ArrayList; 
+import java.io.File; 
+import java.io.BufferedReader; 
+import java.io.PrintWriter; 
+import java.io.InputStream; 
+import java.io.OutputStream; 
+import java.io.IOException; 
+
+public class radar extends PApplet {
+
 float angle =0;
 float target_distance=400;
 float rad_angle=0;
@@ -7,11 +23,11 @@ int height=1000;
 int rayon = height/2;
 int cercleX=500;
 int cercleY=500;
-void setup() {
-  size(1900,1000);
+public void setup() {
+  
 }
 
-void draw() {
+public void draw() {
   background(0);
   
   drawline(rad_angle,255);
@@ -30,7 +46,7 @@ void draw() {
 
 
 }
-void drawline(float angle_arg ,int  alpha_color)
+public void drawline(float angle_arg ,int  alpha_color)
 {
 float x=rayon*cos(angle_arg);
 float y=rayon*sin(angle_arg);
@@ -41,18 +57,18 @@ pushMatrix();
  line(0, 0,x,y);
   popMatrix();
 }
- void draw_shadows(float angle_arg)
+ public void draw_shadows(float angle_arg)
  {
    int k=1;
 for (int i=1; i<255 ;i+=6 )
 {
 
-      drawline( angle_arg+k*0.00872665,255-i);
+      drawline( angle_arg+k*0.00872665f,255-i);
       k++;
 }
 }
 
-void  draw_target(float distance, float angle )
+public void  draw_target(float distance, float angle )
 {
   if (distance<=400)
 
@@ -65,5 +81,15 @@ void  draw_target(float distance, float angle )
     stroke(255);
     square(dist*(cos(angle)), dist*(sin(angle)), 10);
     popMatrix();
+  }
+}
+  public void settings() {  size(1900,1000); }
+  static public void main(String[] passedArgs) {
+    String[] appletArgs = new String[] { "radar" };
+    if (passedArgs != null) {
+      PApplet.main(concat(appletArgs, passedArgs));
+    } else {
+      PApplet.main(appletArgs);
+    }
   }
 }
