@@ -1,12 +1,12 @@
 float angle =0;
-float target_distance=400;
+float target_distance=200;
 float rad_angle=0;
 int radar_range=400;
 int width=1000;
 int height=1000;
-int rayon = height/2;
-int cercleX=500;
-int cercleY=500;
+int rayon = 450;
+int cercleX=460;
+int cercleY=490;
 void setup() {
   size(1900,1000);
 }
@@ -35,7 +35,7 @@ void drawline(float angle_arg ,int  alpha_color)
 float x=rayon*cos(angle_arg);
 float y=rayon*sin(angle_arg);
 pushMatrix();
- translate(width/2,height/2);
+ translate(cercleX,cercleY);
  strokeWeight(5);
  stroke(0, 136, 0,alpha_color);
  line(0, 0,x,y);
