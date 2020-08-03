@@ -28,6 +28,7 @@ public void setup() {
 float target_distance=200;
 float angle =0;
 float cap;
+float target_angle=PI/3;
 public void draw() {
   background(0);
   drawline(rad_angle,255);
@@ -38,10 +39,10 @@ public void draw() {
   stroke(0, 136, 0);
   circle(0,0,2*rayon);
   popMatrix();
-  angle--;
+  angle++;
   angle=angle%360;
   rad_angle=radians(angle);
-  draw_target(target_distance,rad_angle);
+  draw_target(target_distance,target_angle);
   delay(15);
 
 
@@ -49,7 +50,7 @@ public void draw() {
 public void drawline(float angle_arg ,int  alpha_color)
 {
 float x=rayon*cos(angle_arg);
-float y=rayon*sin(angle_arg);
+float y=-rayon*sin(angle_arg);
 pushMatrix();
  translate(cercleX,cercleY);
  strokeWeight(5);
@@ -79,7 +80,7 @@ public void  draw_target(float distance, float angle )
     fill(255, 0, 0);
     strokeWeight(0);
     stroke(255);
-    square(dist*(cos(angle)), dist*(sin(angle)), 10);
+    square(dist*(cos(angle)),-dist*(sin(angle)), 10);
     popMatrix();
   }
 }
