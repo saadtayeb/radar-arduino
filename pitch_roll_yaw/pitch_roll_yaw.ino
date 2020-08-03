@@ -1,10 +1,10 @@
-
-
 /*
    Arduino and MPU6050 Accelerometer and Gyroscope Sensor Tutorial
    by Dejan, https://howtomechatronics.com
 */
+
 #include <Wire.h>
+
 const int MPU = 0x68; // MPU6050 I2C address
 float AccX, AccY, AccZ;
 float GyroX, GyroY, GyroZ;
@@ -13,6 +13,7 @@ float roll, pitch, yaw;
 float AccErrorX, AccErrorY, GyroErrorX, GyroErrorY, GyroErrorZ;
 float elapsedTime, currentTime, previousTime;
 int c = 0;
+
 void setup() {
   Serial.begin(9600);
   Wire.begin();                      // Initialize comunication
@@ -36,7 +37,9 @@ void setup() {
   // Call this function if you need to get the IMU error values for your module
   calculate_IMU_error();
   delay(20);
+
 }
+
 void loop() {
   // === Read acceleromter data === //
   Wire.beginTransmission(MPU);
@@ -50,6 +53,7 @@ void loop() {
   // Calculating Roll and Pitch from the accelerometer data
   accAngleX = (atan(AccY / sqrt(pow(AccX, 2) + pow(AccZ, 2))) * 180 / PI) - 0.58; // AccErrorX ~(0.58) See the calculate_IMU_error()custom function for more details
   accAngleY = (atan(-1 * AccX / sqrt(pow(AccY, 2) + pow(AccZ, 2))) * 180 / PI) + 1.58; // AccErrorY ~(-1.58)
+
   // === Read gyroscope data === //
   previousTime = currentTime;        // Previous time is stored before the actual time read
   currentTime = millis();            // Current time actual time read
@@ -65,10 +69,12 @@ void loop() {
   GyroX = GyroX + 0.56; // GyroErrorX ~(-0.56)
   GyroY = GyroY - 2; // GyroErrorY ~(2)
   GyroZ = GyroZ + 0.79; // GyroErrorZ ~ (-0.8)
+
   // Currently the raw values are in degrees per seconds, deg/s, so we need to multiply by sendonds (s) to get the angle in degrees
   gyroAngleX = gyroAngleX + GyroX * elapsedTime; // deg/s * s = deg
   gyroAngleY = gyroAngleY + GyroY * elapsedTime;
   yaw =  yaw + GyroZ * elapsedTime;
+
   // Complementary filter - combine acceleromter and gyro angle values
   roll = 0.96 * gyroAngleX + 0.04 * accAngleX;
   pitch = 0.96 * gyroAngleY + 0.04 * accAngleY;
@@ -80,6 +86,8 @@ void loop() {
   Serial.print("/");
   Serial.println(yaw);
 }
+
+
 void calculate_IMU_error() {
   // We can call this funtion in the setup section to calculate the accelerometer and gyro data error. From here we will get the error values used in the above equations printed on the Serial Monitor.
   // Note that we should place the IMU flat in order to get the proper values, so that we then can the correct values
