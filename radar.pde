@@ -12,7 +12,7 @@ int cercleY=490;
 
 
 void setup() {
-  myPort  =  new Serial (this, "COM3",  9600);
+  myPort  =  new Serial (this, "COM4",  9600);
   myPort.bufferUntil ( '\n' );   // Receiving the data from the Arduino IDE
   size(1900,1000);
 }

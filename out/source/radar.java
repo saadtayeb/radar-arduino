@@ -3,6 +3,8 @@ import processing.data.*;
 import processing.event.*; 
 import processing.opengl.*; 
 
+import processing.serial.*; 
+
 import java.util.HashMap; 
 import java.util.ArrayList; 
 import java.io.File; 
@@ -14,6 +16,10 @@ import java.io.IOException;
 
 public class radar extends PApplet {
 
+
+Serial myPort;
+
+
 float rad_angle=0;
 int radar_range=400;
 int width=1000;
@@ -21,7 +27,11 @@ int height=1000;
 int rayon = 450;
 int cercleX=460;
 int cercleY=490;
+
+
 public void setup() {
+  myPort  =  new Serial (this, "COM4",  9600);
+  myPort.bufferUntil ( '\n' );   // Receiving the data from the Arduino IDE
   
 }
 //inputs
