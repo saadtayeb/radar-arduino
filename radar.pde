@@ -1,3 +1,6 @@
+import processing.serial.*;
+Serial myPort;
+
 float rad_angle=0;
 int radar_range=400;
 int width=1000;
