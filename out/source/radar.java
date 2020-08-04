@@ -21,16 +21,31 @@ int height=1000;
 int rayon = 450;
 int cercleX=460;
 int cercleY=490;
-public void setup() {
-  
-}
+int compassX=1450;
+int compassY=500;
+PImage compass_img;
+int compass_width=700 ; 
+int compass_height=700;
 //inputs
+float heading=-30;
 float target_distance=200;
 float angle =0;
 float cap;
 float target_angle=PI/3;
+
+
+
+public void setup() {
+  
+  compass_img=loadImage("compass.png");
+}
+
+
+
 public void draw() {
   background(0);
+  draw_compass();
+  draw_heading();
   drawline(rad_angle,255);
   draw_shadows(rad_angle);
   pushMatrix();
@@ -85,9 +100,26 @@ public void  draw_target(float distance, float angle )
   }
 }
 
-public void cap()
-{
+public void draw_compass(){
 
+  pushMatrix();
+  translate(compassX,compassY);
+  imageMode(CENTER);
+  fill(255);
+  circle(0,0,670);
+  rotate(radians(-heading));
+  image(compass_img, 0, 0, compass_width, compass_height);
+  popMatrix();
+}
+
+public void draw_heading()
+{
+  pushMatrix();
+  translate(compassX,compassY);
+  stroke(255,0,0);
+  strokeWeight(5);
+  line(0,0,0,-670/2);
+  popMatrix();
 }
   public void settings() {  size(1900,1000); }
   static public void main(String[] passedArgs) {
