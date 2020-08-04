@@ -3,6 +3,8 @@ import processing.data.*;
 import processing.event.*; 
 import processing.opengl.*; 
 
+import processing.serial.*; 
+
 import java.util.HashMap; 
 import java.util.ArrayList; 
 import java.io.File; 
@@ -14,6 +16,8 @@ import java.io.IOException;
 
 public class radar extends PApplet {
 
+
+Serial myPort;
 float rad_angle=0;
 int radar_range=400;
 int width=1000;
@@ -27,7 +31,7 @@ PImage compass_img;
 int compass_width=700 ; 
 int compass_height=700;
 //inputs
-float heading=-30;
+float heading;
 float target_distance=200;
 float angle =0;
 float cap;
@@ -38,9 +42,14 @@ float target_angle=PI/3;
 public void setup() {
   
   compass_img=loadImage("compass.png");
+  myPort  =  new Serial (this, "COM4",  9600);
+  myPort.bufferUntil ( '\n' );   // Receiving the data from the Arduino IDE
 }
 
+ public void serialEvent  (Serial myPort) {
+heading=PApplet.parseFloat(myPort.readStringUntil ('\n'));
 
+}
 
 public void draw() {
   background(0);

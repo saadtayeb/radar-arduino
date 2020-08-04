@@ -11,7 +11,7 @@ PImage compass_img;
 int compass_width=700 ; 
 int compass_height=700;
 //inputs
-float heading=-30;
+float heading;
 float target_distance=200;
 float angle =0;
 float cap;
@@ -23,7 +23,6 @@ void setup() {
   size(1900,1000);
   compass_img=loadImage("compass.png");
 }
-
 
 
 void draw() {
