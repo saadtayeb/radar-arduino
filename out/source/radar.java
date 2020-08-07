@@ -23,6 +23,7 @@ int cercleX=460;
 int cercleY=490;
 int compassX=1630;
 int compassY=500;
+int nq=1852;
 PImage compass_img;
 PImage target_img;
 int compass_width=500;
@@ -30,12 +31,13 @@ int compass_height=500;
 int target_info_imgX=1050;
 int target_info_imgY=200;
 boolean target_img_info_interrupteur = false;
+int text_size=25;
 //inputs
 float heading;
-float target_distance=200;
+int target_distance=200;
 float angle =0;
 float cap;
-float target_angle=-PI/3;
+float target_angle=-PI;
 float target_coordinates[]=new float[2];
 int target_box_Size=10;
 
@@ -156,9 +158,33 @@ public void  draw_info_target(boolean state)
   translate(target_info_imgX,target_info_imgY);
   imageMode(CENTER);
   image(target_img,0 , 0, 300, 100);
+  display_bearing_and_distance(bearing_calcul(  target_angle ));
   popMatrix();
   }
-  
+}
+
+public String  bearing_calcul( float target_angle )
+{
+  String direction="";
+  int bear=90-PApplet.parseInt(degrees(target_angle));
+  if(bear<0)
+  {
+      direction="Babord";
+  }
+  else if (bear >0)
+  {
+      direction="Tribord";
+  }
+
+  direction= Integer.toString(abs(bear))+"° "+direction;
+  return direction;
+}
+public void display_bearing_and_distance(String infos)
+{
+  textSize(text_size);
+  fill(7, 48, 250);
+  text(infos,-15,5);
+  text(target_distance,-15,40);
 }
   public void settings() {  size(1900,1000); }
   static public void main(String[] passedArgs) {
