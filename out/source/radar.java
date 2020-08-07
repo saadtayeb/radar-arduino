@@ -27,11 +27,12 @@ int nq=1852;
 PImage compass_img;
 PImage target_img;
 PImage range_circle_img;
+PImage cursor_f_img;
+PImage cursor_plus_img;
 int compass_width=500;
 int compass_height=500;
 int target_info_imgX=1050;
 int target_info_imgY=200;
-boolean target_img_info_interrupteur = false;
 int text_size=25;
 int circle_infoX=1100;
 int circle_infoY=200;
@@ -40,7 +41,7 @@ float heading;
 int target_distance=200;
 float angle =0;
 float cap;
-float target_angle=-PI;
+float target_angle=PI;
 float target_coordinates[]=new float[2];
 int target_box_Size=10;
 
@@ -49,22 +50,35 @@ public void setup() {
   compass_img=loadImage("compass.png");
   target_img=loadImage("target_infos.png");
   range_circle_img=loadImage("range_circles.png");
+  cursor_f_img=loadImage("cursor_f.png");
+  cursor_plus_img=loadImage("cursor_plus.png");
 }
 
 
 public void draw() {
   background(0);
+  image(cursor_f_img,1200,800,90,90);
+  image(cursor_plus_img,1100,800,90,90);
   draw_compass();
   draw_heading();
   draw_shadows(rad_angle);
   draw_scope();
   target_coordinates=draw_target(target_distance,target_angle);
-  draw_info_target(target_img_info_interrupteur);
   draw_range_circles();
-
   delay(5);
 
 }
+
+public void mouseClicked(){
+  mouseX=mouseX-circleX;
+  mouseY=mouseY-circleY;
+  if  (mouseX > target_coordinates[0]-target_box_Size && mouseX < target_coordinates[0]+target_box_Size && 
+      mouseY > target_coordinates[1]-target_box_Size && mouseY < target_coordinates[1]+target_box_Size)
+      {
+          draw_info_target();
+      }
+}
+
 public void draw_scope()
 {
   pushMatrix();
@@ -144,34 +158,25 @@ public void draw_heading()
   line(0,0,0,-compass_width/2);
   popMatrix();
 }
-public void mouseClicked(){
-  mouseX=mouseX-circleX;
-  mouseY=mouseY-circleY;
-  if  (mouseX > target_coordinates[0]-target_box_Size && mouseX < target_coordinates[0]+target_box_Size && 
-      mouseY > target_coordinates[1]-target_box_Size && mouseY < target_coordinates[1]+target_box_Size)
-      {
-          target_img_info_interrupteur=true;
-      }
-}
 
 
-public void  draw_info_target(boolean state)
+
+public void  draw_info_target()
 {
-  if(state)
-  {
+  
   pushMatrix();
   translate(target_info_imgX,target_info_imgY);
   imageMode(CENTER);
   image(target_img,0 , 0, 300, 100);
   display_bearing_and_distance(bearing_calcul(  target_angle ));
   popMatrix();
-  }
+
 }
 
 public String  bearing_calcul( float target_angle )
 {
   String direction="";
-  int bear=90-PApplet.parseInt(degrees(target_angle));
+  int bear=(90-PApplet.parseInt(degrees(target_angle)))%180;
   if(bear<0)
   {
       direction="Babord";
@@ -196,8 +201,6 @@ public int draw_range_circles()
 {
   int mouse_relative_X=mouseX-circleX;
   int mouse_relative_Y=mouseY-circleY;
-  println(mouse_relative_X);
-  println(mouse_relative_Y);
   int range_circle_rayon=0;
   if(dist(mouse_relative_X,mouse_relative_Y,0,0)<rayon)
   {
