@@ -40,8 +40,9 @@ void draw() {
   draw_scope();
   target_coordinates=draw_target(target_distance,target_angle);
   draw_info_target(target_img_info_interrupteur);
-  delay(15);
+  draw_distance_circles();
 
+  delay(5);
 
 }
 void draw_scope()
@@ -170,3 +171,23 @@ void display_bearing_and_distance(String infos)
   text(infos,-15,5);
   text(target_distance,-15,40);
 }
+
+int draw_distance_circles()
+{
+  int mouse_relative_X=mouseX-cercleX;
+  int mouse_relative_Y=mouseY-cercleY;
+  pushMatrix();
+  translate(cercleX,cercleY);
+  int distance_circle_rayon;
+  if(dist(mouse_relative_X,mouse_relative_Y,0,0)<rayon)
+  {
+    distance_circle_rayon=dist(mouse_relative_X,mouse_relative_Y,0,0)
+  noFill();
+  strokeWeight(2);
+  stroke(255);
+  circle(0,0,2*sqrt(mouse_relative_X*mouse_relative_X+mouse_relative_Y*mouse_relative_Y));
+  }
+ popMatrix();
+ return distance_circle_rayon;
+}
+
