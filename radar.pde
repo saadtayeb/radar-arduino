@@ -8,6 +8,7 @@ int circleY=490;
 int compassX=1630;
 int compassY=500;
 int nq=1852;
+String state="";
 PImage compass_img;
 PImage target_img;
 PImage range_circle_img;
@@ -20,6 +21,8 @@ int target_info_imgY=200;
 int text_size=25;
 int circle_infoX=1100;
 int circle_infoY=200;
+float cursor_f[]={1200,800,90,90} ;
+float cursor_plus[]={1100,800,90,90};
 //inputs
 float heading;
 int target_distance=200;
@@ -41,8 +44,7 @@ void setup() {
 
 void draw() {
   background(0);
-  image(cursor_f_img,1200,800,90,90);
-  image(cursor_plus_img,1100,800,90,90);
+  draw_cursor_buttons(state);
   draw_compass();
   draw_heading();
   draw_shadows(rad_angle);
@@ -54,13 +56,23 @@ void draw() {
 }
 
 void mouseClicked(){
-  mouseX=mouseX-circleX;
-  mouseY=mouseY-circleY;
-  if  (mouseX > target_coordinates[0]-target_box_Size && mouseX < target_coordinates[0]+target_box_Size && 
-      mouseY > target_coordinates[1]-target_box_Size && mouseY < target_coordinates[1]+target_box_Size)
+
+  if (cursor_on_objet(target_coordinates[0]+circleX,target_coordinates[1]+circleY,target_box_Size,target_box_Size))
+
       {
           draw_info_target();
       }
+else if (cursor_on_objet(cursor_f[0],cursor_f[1],cursor_f[2],cursor_f[3]))
+{
+ 
+state="plot";
+}
+else if (cursor_on_objet(cursor_plus[0],cursor_plus[1],cursor_plus[2],cursor_plus[3]))
+{
+state="draw_circle";
+ 
+}
+
 }
 
 void draw_scope()
@@ -210,4 +222,49 @@ void  draw_range_circle_infos( int rayon)
  text(rayon,100,7);
  popMatrix();
  
+}
+
+boolean  cursor_on_objet(float x,float y,float sizeX,float sizeY)
+{
+  if (mouseX > x-sizeX && mouseX < x+sizeX && mouseY > y-sizeY && mouseY < y+sizeY)
+      {
+        return true;
+      }
+  return false;
+}
+void draw_cursor_buttons(String state)
+{
+  if (state=="plot")
+  {
+    pushMatrix();
+    translate(cursor_f[0],cursor_f[1]);
+    strokeWeight(5);
+    stroke(0,136,0);
+    rectMode(CENTER);
+    rect(0, 0,cursor_f[2],cursor_f[3]);
+    popMatrix();
+    image(cursor_f_img,cursor_f[0],cursor_f[1],cursor_f[2],cursor_f[3]);
+    noStroke();
+    image(cursor_plus_img,cursor_plus[0],cursor_plus[1],cursor_plus[2],cursor_plus[3]);
+  }
+  else if (state=="draw_circle") {
+    
+    pushMatrix();
+    translate(cursor_plus[0],cursor_plus[1]);
+    strokeWeight(5);
+    stroke(0,136,0);
+    rectMode(CENTER);
+    rect(0, 0,cursor_plus[2],cursor_plus[3]);
+    popMatrix();
+    image(cursor_plus_img,cursor_plus[0],cursor_plus[1],cursor_plus[2],cursor_plus[3]);
+    noStroke();
+    image(cursor_f_img,cursor_f[0],cursor_f[1],cursor_f[2],cursor_f[3]);
+  }
+  else
+  {
+    
+     image(cursor_plus_img,cursor_plus[0],cursor_plus[1],cursor_plus[2],cursor_plus[3]);
+     image(cursor_f_img,cursor_f[0],cursor_f[1],cursor_f[2],cursor_f[3]);
+
+  }
 }
