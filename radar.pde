@@ -3,19 +3,22 @@ int radar_range=400;
 int width=1000;
 int height=1000;
 int rayon = 450;
-int cercleX=460;
-int cercleY=490;
+int circleX=460;
+int circleY=490;
 int compassX=1630;
 int compassY=500;
 int nq=1852;
 PImage compass_img;
 PImage target_img;
+PImage range_circle_img;
 int compass_width=500;
 int compass_height=500;
 int target_info_imgX=1050;
 int target_info_imgY=200;
 boolean target_img_info_interrupteur = false;
 int text_size=25;
+int circle_infoX=1100;
+int circle_infoY=200;
 //inputs
 float heading;
 int target_distance=200;
@@ -29,6 +32,7 @@ void setup() {
   size(1900,1000);
   compass_img=loadImage("compass.png");
   target_img=loadImage("target_infos.png");
+  range_circle_img=loadImage("range_circles.png");
 }
 
 
@@ -40,7 +44,7 @@ void draw() {
   draw_scope();
   target_coordinates=draw_target(target_distance,target_angle);
   draw_info_target(target_img_info_interrupteur);
-  draw_distance_circles();
+  draw_range_circles();
 
   delay(5);
 
@@ -48,7 +52,7 @@ void draw() {
 void draw_scope()
 {
   pushMatrix();
-  translate(cercleX,cercleY);
+  translate(circleX,circleY);
   noFill();
   stroke(0, 136, 0);
   circle(0,0,2*rayon);
@@ -66,7 +70,7 @@ void drawline(float angle_arg ,int  alpha_color)
 float x=rayon*cos(angle_arg);
 float y=-rayon*sin(angle_arg);
 pushMatrix();
- translate(cercleX,cercleY);
+ translate(circleX,circleY);
  strokeWeight(5);
  stroke(0, 136, 0,alpha_color);
  line(0, 0,x,y);
@@ -90,7 +94,7 @@ float[]  draw_target(float distance, float angle )
 
   {
     pushMatrix();
-    translate(cercleX,cercleY);
+    translate(circleX,circleY);
     float dist=map(distance,0,radar_range,0,rayon);
     fill(255, 0, 0);
     strokeWeight(0);
@@ -125,8 +129,8 @@ void draw_heading()
   popMatrix();
 }
 void mouseClicked(){
-  mouseX=mouseX-cercleX;
-  mouseY=mouseY-cercleY;
+  mouseX=mouseX-circleX;
+  mouseY=mouseY-circleY;
   if  (mouseX > target_coordinates[0]-target_box_Size && mouseX < target_coordinates[0]+target_box_Size && 
       mouseY > target_coordinates[1]-target_box_Size && mouseY < target_coordinates[1]+target_box_Size)
       {
@@ -172,22 +176,35 @@ void display_bearing_and_distance(String infos)
   text(target_distance,-15,40);
 }
 
-int draw_distance_circles()
+int draw_range_circles()
 {
-  int mouse_relative_X=mouseX-cercleX;
-  int mouse_relative_Y=mouseY-cercleY;
-  pushMatrix();
-  translate(cercleX,cercleY);
-  int distance_circle_rayon;
+  int mouse_relative_X=mouseX-circleX;
+  int mouse_relative_Y=mouseY-circleY;
+  println(mouse_relative_X);
+  println(mouse_relative_Y);
+  int range_circle_rayon=0;
   if(dist(mouse_relative_X,mouse_relative_Y,0,0)<rayon)
   {
-    distance_circle_rayon=dist(mouse_relative_X,mouse_relative_Y,0,0)
+  range_circle_rayon=int(dist(mouse_relative_X,mouse_relative_Y,0,0));
   noFill();
   strokeWeight(2);
   stroke(255);
-  circle(0,0,2*sqrt(mouse_relative_X*mouse_relative_X+mouse_relative_Y*mouse_relative_Y));
+  circle(circleX,circleY,2*range_circle_rayon);
+  draw_range_circle_infos(range_circle_rayon);
   }
- popMatrix();
- return distance_circle_rayon;
+ 
+ return range_circle_rayon;
 }
 
+void  draw_range_circle_infos( int rayon)
+{
+ imageMode(CENTER);
+ pushMatrix();
+ translate(circle_infoX,circle_infoY);
+ image(range_circle_img,0,0,500 ,54);
+ textSize(text_size);
+ fill(7, 48, 250);
+ text(rayon,100,7);
+ popMatrix();
+ 
+}
