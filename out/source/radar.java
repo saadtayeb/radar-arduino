@@ -231,8 +231,6 @@ public int draw_range_circles()
 
   int range_circle_rayon=0;
   int[] check=cursor_in_circle(circleX,circleY,rayon);
-  println("check[0]: "+check[0]);
-  println("check[1]: "+check[1]);
     if(check[0]==1)
   {
   range_circle_rayon=check[1];
@@ -254,7 +252,7 @@ public void  draw_range_circle_infos( int rayon)
  image(range_circle_img,0,0,500 ,54);
  textSize(text_size);
  fill(7, 48, 250);
- text(rayon,100,7);
+ text(real_distance(rayon),100,7);
  popMatrix();
  
 }
@@ -332,6 +330,10 @@ public void   draw_static_range_circle(int rayon_of_range_circle)
   noFill();
   strokeWeight(1);
   circle(circleX,circleY,2*rayon_of_range_circle);
+}
+public int real_distance(int relative_distance)
+{
+  return PApplet.parseInt(map(relative_distance,0,rayon,0,radar_range));
 }
   public void settings() {  size(1900,1000); }
   static public void main(String[] passedArgs) {
