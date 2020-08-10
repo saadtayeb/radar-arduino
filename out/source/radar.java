@@ -42,7 +42,7 @@ float cursor_plus[]={1050,800,90,90};
 int static_range_cirle=0;
 boolean draw_target_infos_status=false;
 //inputs
-float heading;
+float heading=0;
 int target_distance=200;
 float angle =0;
 float cap;
@@ -54,7 +54,7 @@ int target_box_Size=10;
 public void setup() {
 
   
-  compass_img=loadImage("compass.png");
+  compass_img=loadImage("compass2.png");
   target_img=loadImage("target_infos.png");
   range_circle_img=loadImage("range_circles.png");
   cursor_f_img=loadImage("cursor_f.png");
