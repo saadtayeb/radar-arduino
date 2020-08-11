@@ -11,7 +11,6 @@ int nq=1852;
 String state="nothing";
 PImage compass_img;
 PImage target_img;
-PImage range_circle_img;
 PImage cursor_f_img;
 PImage cursor_plus_img;
 int compass_width=500;
@@ -41,7 +40,6 @@ void setup() {
   size(1900,1000);
   compass_img=loadImage("compass.png");
   target_img=loadImage("target_infos.png");
-  range_circle_img=loadImage("range_circles.png");
   cursor_f_img=loadImage("cursor_f.png");
   cursor_plus_img=loadImage("cursor_plus.png");
 
@@ -69,6 +67,10 @@ void draw() {
 }
 
 void mouseClicked(){
+  if (mouseButton==LEFT)
+  {
+
+  
 
   if (state=="plot"&&cursor_in_box(target_coordinates[0]+circleX,target_coordinates[1]+circleY,target_box_Size,target_box_Size))
 
@@ -94,7 +96,7 @@ else if ((state=="draw_circle") && (cursor_in_circle(circleX,circleY,rayon)[0]==
 }
  
 
-
+}
 }
 
 void draw_scope()
@@ -230,24 +232,13 @@ int draw_range_circles()
   circle(circleX,circleY,2*range_circle_rayon);
   textSize(20);
   fill(255);
-  text(range_circle_rayon,mouseX,mouseY);
+  text(real_distance(range_circle_rayon),mouseX,mouseY);
   }
  
  return range_circle_rayon;
 }
 
-void  draw_range_circle_infos( int rayon)
-{
- imageMode(CENTER);
- pushMatrix();
- translate(circle_infoX,circle_infoY);
- image(range_circle_img,0,0,500 ,54);
- textSize(text_size);
- fill(7, 48, 250);
- text(real_distance(rayon),100,7);
- popMatrix();
- 
-}
+
 
 boolean  cursor_in_box(float x,float y,float sizeX,float sizeY)
 {
@@ -324,7 +315,7 @@ void   draw_static_range_circle(int rayon_of_range_circle,int mouse_X,int mouse_
   circle(circleX,circleY,2*rayon_of_range_circle);
   textSize(20);
   fill(255);
-  text(rayon_of_range_circle,mouse_X,mouse_Y);
+  text(real_distance(rayon_of_range_circle),mouse_X,mouse_Y);
  
 }
 int real_distance(int relative_distance)
