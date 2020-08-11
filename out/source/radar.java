@@ -41,8 +41,9 @@ float cursor_f[]={1200,800,90,90} ;
 float cursor_plus[]={1050,800,90,90};
 int static_range_cirle=0;
 boolean draw_target_infos_status=false;
+int[] rayon_coordinate= new int[2];
 //inputs
-float heading=0;
+float heading=10;
 int target_distance=200;
 float angle =0;
 float cap;
@@ -54,7 +55,7 @@ int target_box_Size=10;
 public void setup() {
 
   
-  compass_img=loadImage("compass2.png");
+  compass_img=loadImage("compass.png");
   target_img=loadImage("target_infos.png");
   range_circle_img=loadImage("range_circles.png");
   cursor_f_img=loadImage("cursor_f.png");
@@ -71,7 +72,11 @@ public void draw() {
   draw_shadows(rad_angle);
   draw_scope();
   target_coordinates=draw_target(target_distance,target_angle);
-  draw_static_range_circle(static_range_cirle);
+  if (static_range_cirle>0)
+  {
+    draw_static_range_circle(static_range_cirle,rayon_coordinate[0],rayon_coordinate[1]);
+  }
+  
   if (draw_target_infos_status){
     draw_info_target(target_angle,target_distance);
   }
@@ -100,7 +105,8 @@ else if ((state=="draw_circle") && (cursor_in_circle(circleX,circleY,rayon)[0]==
 {
 
  static_range_cirle= cursor_in_circle(circleX,circleY,rayon)[1];
- 
+ rayon_coordinate[0]=mouseX;
+ rayon_coordinate[1]=mouseY;
 }
  
 
@@ -238,7 +244,9 @@ public int draw_range_circles()
   strokeWeight(2);
   stroke(255);
   circle(circleX,circleY,2*range_circle_rayon);
-  draw_range_circle_infos(range_circle_rayon);
+  textSize(20);
+  fill(255);
+  text(range_circle_rayon,mouseX,mouseY);
   }
  
  return range_circle_rayon;
@@ -324,12 +332,16 @@ public void draw_cursor_buttons(String state)
   }
 }
 
-public void   draw_static_range_circle(int rayon_of_range_circle)
+public void   draw_static_range_circle(int rayon_of_range_circle,int mouse_X,int mouse_Y )
 {
   stroke(255);
   noFill();
   strokeWeight(1);
   circle(circleX,circleY,2*rayon_of_range_circle);
+  textSize(20);
+  fill(255);
+  text(rayon_of_range_circle,mouse_X,mouse_Y);
+ 
 }
 public int real_distance(int relative_distance)
 {
