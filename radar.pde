@@ -1,3 +1,5 @@
+//import processing.serial.*;
+//Serial myPort;
 float rad_angle=0;
 int radar_range=400;
 int width=1000;
@@ -36,7 +38,9 @@ int target_box_Size=10;
 
 
 void setup() {
-
+  
+//myPort  =  new Serial (this, "COM4",  9600);
+  //myPort.bufferUntil ( '\n' );
   size(1900,1000);
   compass_img=loadImage("compass.png");
   target_img=loadImage("target_infos.png");
@@ -44,6 +48,12 @@ void setup() {
   cursor_plus_img=loadImage("cursor_plus.png");
 
 }
+
+
+   /* void serialEvent  (Serial myPort) {
+pry=myPort.readStringUntil ('\n');
+
+}*/
 
 
 void draw() {
