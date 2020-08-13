@@ -83,7 +83,7 @@ public void draw() {
 }
 
 public void mouseClicked(){
-  if (mouseButton==left)
+  if (mouseButton==LEFT)
   {
 
   
@@ -113,6 +113,7 @@ else if ((state=="draw_circle") && (cursor_in_circle(circleX,circleY,rayon)[0]==
  
 
 }
+
 }
 
 public void draw_scope()

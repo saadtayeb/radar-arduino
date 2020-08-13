@@ -97,6 +97,7 @@ else if ((state=="draw_circle") && (cursor_in_circle(circleX,circleY,rayon)[0]==
  
 
 }
+
 }
 
 void draw_scope()
