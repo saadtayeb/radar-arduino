@@ -349,6 +349,41 @@ public int real_distance(int relative_distance)
 {
   return PApplet.parseInt(map(relative_distance,0,rayon,0,radar_range));
 }
+public class scope {
+ int circleX;
+ int circleY;
+ int rayon;
+
+ public  scope() {
+    circleX=0;
+    circleY=0;
+    rayon=0;
+ }
+public scope(int circlex, int circley,int scope_rayon)
+{
+circleX=circlex;
+circleY=circley;
+rayon=scope_rayon;
+}
+
+public  draw_scope()
+{
+  pushMatrix();
+  translate(circleX,circleY);
+  noFill();
+  stroke(0, 136, 0);
+  circle(0,0,2*rayon);
+  popMatrix();
+}
+}
+public void setup() {
+    
+}
+
+public void draw() {
+    
+}
+
   public void settings() {  size(1900,1000); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "radar" };
