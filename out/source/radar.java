@@ -14,6 +14,8 @@ import java.io.IOException;
 
 public class radar extends PApplet {
 
+//import processing.serial.*;
+//Serial myPort;
 float rad_angle=0;
 int radar_range=400;
 int width=1000;
@@ -52,7 +54,9 @@ int target_box_Size=10;
 
 
 public void setup() {
-
+  
+//myPort  =  new Serial (this, "COM4",  9600);
+  //myPort.bufferUntil ( '\n' );
   
   compass_img=loadImage("compass.png");
   target_img=loadImage("target_infos.png");
@@ -60,6 +64,12 @@ public void setup() {
   cursor_plus_img=loadImage("cursor_plus.png");
 
 }
+
+
+   /* void serialEvent  (Serial myPort) {
+pry=myPort.readStringUntil ('\n');
+
+}*/
 
 
 public void draw() {
